@@ -1,0 +1,26 @@
+# Environment
+.env
+.env.*
+server/.env
+server/.env.*
+client/.env
+client/.env.*
+
+# Dependencies
+node_modules/
+
+# Builds
+dist/
+build/
+
+# Temporary project copy
+temp-client/
+
+# Logs
+*.log
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
