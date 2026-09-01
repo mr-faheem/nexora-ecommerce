@@ -1,26 +1,38 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL:
+    import.meta.env.VITE_API_BASE_URL ||
+    "http://localhost:5000/api",
 });
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token =
+      localStorage.getItem("token");
 
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization =
+        `Bearer ${token}`;
     }
 
-    // FormData ho to browser ko Content-Type khud set karne do
-    if (config.data instanceof FormData) {
-      delete config.headers["Content-Type"];
+    // FormData ho to browser ko
+    // Content-Type khud set karne do
+    if (
+      config.data instanceof
+      FormData
+    ) {
+      delete config.headers[
+        "Content-Type"
+      ];
     }
 
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(
+      error
+    );
   }
 );
 
