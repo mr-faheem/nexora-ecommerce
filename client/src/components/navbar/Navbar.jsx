@@ -20,6 +20,7 @@ import {
   Menu,
   X,
   ChevronDown,
+  ArrowRight,
 } from "lucide-react";
 
 import useAuth from "../../hooks/useAuth";
@@ -112,37 +113,65 @@ function Navbar() {
     };
   }, []);
 
- const navLinkClass = ({
-  isActive,
-}) =>
-  `relative py-2 transition-colors duration-300
-  after:absolute
-  after:left-0
-  after:-bottom-1
-  after:h-[2px]
-  after:bg-black
-  after:transition-all
-  after:duration-300
-  ${
-    isActive
-      ? "text-black font-semibold after:w-full"
-      : "text-gray-600 hover:text-black after:w-0 hover:after:w-full"
-  }`;
+  const navLinkClass = ({
+    isActive,
+  }) =>
+    `relative py-2 transition-colors duration-300
+    after:absolute
+    after:left-0
+    after:-bottom-1
+    after:h-[2px]
+    after:bg-black
+    after:transition-all
+    after:duration-300
+    ${
+      isActive
+        ? "text-black font-semibold after:w-full"
+        : "text-gray-600 hover:text-black after:w-0 hover:after:w-full"
+    }`;
+
+  const mobileNavLinkClass = ({
+    isActive,
+  }) =>
+    `flex items-center justify-between py-4 text-[15px] border-b border-gray-100 transition-colors
+    ${
+      isActive
+        ? "font-semibold text-black"
+        : "text-gray-700"
+    }`;
 
   return (
     <header className="bg-white border-b sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
-        {/* Logo */}
+      <div
+        className="
+          max-w-7xl mx-auto
+          h-[68px] md:h-20
+          px-4 sm:px-5 md:px-6
+          flex items-center justify-between
+        "
+      >
+        {/* ================================================= */}
+        {/* LOGO */}
+        {/* ================================================= */}
 
         <Link
           to="/"
           onClick={closeMenus}
-          className="text-2xl md:text-[26px] font-bold tracking-[0.08em]"
+          className="
+            text-[22px]
+            sm:text-2xl
+            md:text-[26px]
+            font-bold
+            tracking-[0.09em]
+            leading-none
+          "
         >
           NEXORA
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* ================================================= */}
+        {/* DESKTOP NAVIGATION */}
+        {/* ================================================= */}
 
         <nav className="hidden md:flex items-center gap-8">
           <NavLink
@@ -191,10 +220,21 @@ function Navbar() {
           </NavLink>
         </nav>
 
-        {/* Right Side */}
+        {/* ================================================= */}
+        {/* RIGHT SIDE */}
+        {/* ================================================= */}
 
-        <div className="flex items-center gap-4 md:gap-5">
-          {/* Profile */}
+        <div
+          className="
+            flex items-center
+            gap-3
+            sm:gap-3.5
+            md:gap-5
+          "
+        >
+          {/* ================================================= */}
+          {/* PROFILE */}
+          {/* ================================================= */}
 
           <div
             ref={profileRef}
@@ -202,18 +242,28 @@ function Navbar() {
           >
             <button
               type="button"
-              onClick={() =>
+              onClick={() => {
                 setProfileOpen(
                   (
                     previous
                   ) =>
                     !previous
-                )
-              }
-              className="flex items-center gap-1 hover:text-gray-500 transition"
+                );
+
+                setMobileOpen(false);
+              }}
+              className="
+                flex items-center gap-1
+                hover:text-gray-500
+                transition
+                p-1
+              "
               aria-label="Account"
             >
-              <User size={22} />
+              <User
+                size={21}
+                className="md:w-[22px] md:h-[22px]"
+              />
 
               <ChevronDown
                 size={14}
@@ -222,7 +272,21 @@ function Navbar() {
             </button>
 
             {profileOpen && (
-              <div className="absolute right-0 top-10 w-60 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden z-50">
+              <div
+                className="
+                  absolute
+                  right-0
+                  top-11
+                  w-[calc(100vw-32px)]
+                  max-w-[240px]
+                  bg-white
+                  border border-gray-200
+                  rounded-2xl
+                  shadow-[0_18px_45px_rgba(0,0,0,0.12)]
+                  overflow-hidden
+                  z-[60]
+                "
+              >
                 {isAuthenticated ? (
                   <>
                     <div className="px-4 py-4 border-b">
@@ -243,7 +307,7 @@ function Navbar() {
                       onClick={
                         closeMenus
                       }
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition"
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition"
                     >
                       <User
                         size={18}
@@ -257,7 +321,7 @@ function Navbar() {
                       onClick={
                         closeMenus
                       }
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition"
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition"
                     >
                       <Package
                         size={18}
@@ -273,7 +337,7 @@ function Navbar() {
                         onClick={
                           closeMenus
                         }
-                        className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition"
+                        className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition"
                       >
                         <LayoutDashboard
                           size={18}
@@ -288,7 +352,16 @@ function Navbar() {
                       onClick={
                         handleLogout
                       }
-                      className="w-full flex items-center gap-3 px-4 py-3 text-left text-red-600 border-t hover:bg-red-50 transition"
+                      className="
+                        w-full
+                        flex items-center gap-3
+                        px-4 py-3
+                        text-left
+                        text-red-600
+                        border-t
+                        hover:bg-red-50
+                        transition
+                      "
                     >
                       <LogOut
                         size={18}
@@ -304,7 +377,7 @@ function Navbar() {
                       onClick={
                         closeMenus
                       }
-                      className="block px-4 py-3 hover:bg-gray-100 transition"
+                      className="block px-4 py-3 hover:bg-gray-50 transition"
                     >
                       Login
                     </Link>
@@ -314,7 +387,7 @@ function Navbar() {
                       onClick={
                         closeMenus
                       }
-                      className="block px-4 py-3 border-t hover:bg-gray-100 transition"
+                      className="block px-4 py-3 border-t hover:bg-gray-50 transition"
                     >
                       Register
                     </Link>
@@ -324,18 +397,48 @@ function Navbar() {
             )}
           </div>
 
-          {/* Wishlist */}
+          {/* ================================================= */}
+          {/* WISHLIST */}
+          {/* ================================================= */}
 
           <Link
             to="/wishlist"
-            className="relative flex items-center justify-center hover:text-gray-500 transition"
+            onClick={() =>
+              setMobileOpen(false)
+            }
+            className="
+              relative
+              flex items-center justify-center
+              p-1
+              hover:text-gray-500
+              transition
+            "
             aria-label="Wishlist"
           >
-            <Heart size={22} />
+            <Heart
+              size={21}
+              className="md:w-[22px] md:h-[22px]"
+            />
 
             {wishlistCount >
               0 && (
-              <span className="absolute -top-3 -right-3 min-w-5 h-5 px-1 bg-black !text-white text-xs rounded-full flex items-center justify-center">
+              <span
+                className="
+                  absolute
+                  -top-1.5
+                  -right-1.5
+                  min-w-[17px]
+                  h-[17px]
+                  px-1
+                  bg-black
+                  !text-white
+                  text-[10px]
+                  font-semibold
+                  rounded-full
+                  flex items-center justify-center
+                  leading-none
+                "
+              >
                 {
                   wishlistCount
                 }
@@ -343,104 +446,197 @@ function Navbar() {
             )}
           </Link>
 
-          {/* Cart */}
+          {/* ================================================= */}
+          {/* CART */}
+          {/* ================================================= */}
 
           <Link
             to="/cart"
-            className="relative flex items-center justify-center hover:text-gray-500 transition"
+            onClick={() =>
+              setMobileOpen(false)
+            }
+            className="
+              relative
+              flex items-center justify-center
+              p-1
+              hover:text-gray-500
+              transition
+            "
             aria-label="Cart"
           >
             <ShoppingCart
-              size={22}
+              size={21}
+              className="md:w-[22px] md:h-[22px]"
             />
 
             {cartCount > 0 && (
-              <span className="absolute -top-3 -right-3 min-w-5 h-5 px-1 bg-black !text-white text-xs rounded-full flex items-center justify-center">
+              <span
+                className="
+                  absolute
+                  -top-1.5
+                  -right-1.5
+                  min-w-[17px]
+                  h-[17px]
+                  px-1
+                  bg-black
+                  !text-white
+                  text-[10px]
+                  font-semibold
+                  rounded-full
+                  flex items-center justify-center
+                  leading-none
+                "
+              >
                 {cartCount}
               </span>
             )}
           </Link>
 
-          {/* Mobile Menu */}
+          {/* ================================================= */}
+          {/* MOBILE MENU */}
+          {/* ================================================= */}
 
           <button
             type="button"
-            onClick={() =>
+            onClick={() => {
               setMobileOpen(
                 (
                   previous
                 ) =>
                   !previous
-              )
-            }
-            className="md:hidden"
+              );
+
+              setProfileOpen(false);
+            }}
+            className="
+              md:hidden
+              flex items-center justify-center
+              p-1
+              ml-0.5
+            "
             aria-label="Menu"
           >
             {mobileOpen ? (
-              <X size={24} />
+              <X size={23} />
             ) : (
-              <Menu
-                size={24}
-              />
+              <Menu size={23} />
             )}
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* ================================================= */}
+      {/* MOBILE NAVIGATION */}
+      {/* ================================================= */}
 
       {mobileOpen && (
-        <div className="md:hidden border-t bg-white">
-          <nav className="px-6 py-5 flex flex-col">
-            <Link
+        <div
+          className="
+            md:hidden
+            border-t
+            bg-white
+            shadow-[0_16px_30px_rgba(0,0,0,0.06)]
+          "
+        >
+          <nav className="px-5 pb-5">
+            <NavLink
               to="/"
               onClick={
                 closeMenus
               }
-              className="py-3 border-b"
+              className={
+                mobileNavLinkClass
+              }
             >
-              Home
-            </Link>
+              <span>
+                Home
+              </span>
 
-            <Link
+              <ArrowRight
+                size={16}
+                className="text-gray-400"
+              />
+            </NavLink>
+
+            <NavLink
               to="/shop"
               onClick={
                 closeMenus
               }
-              className="py-3 border-b"
+              className={
+                mobileNavLinkClass
+              }
             >
-              Shop
-            </Link>
+              <span>
+                Shop
+              </span>
 
-            <Link
+              <ArrowRight
+                size={16}
+                className="text-gray-400"
+              />
+            </NavLink>
+
+            <NavLink
               to="/categories"
               onClick={
                 closeMenus
               }
-              className="py-3 border-b"
+              className={
+                mobileNavLinkClass
+              }
             >
-              Categories
-            </Link>
+              <span>
+                Categories
+              </span>
 
-            <Link
+              <ArrowRight
+                size={16}
+                className="text-gray-400"
+              />
+            </NavLink>
+
+            <NavLink
               to="/about"
               onClick={
                 closeMenus
               }
-              className="py-3 border-b"
+              className={
+                mobileNavLinkClass
+              }
             >
-              About Us
-            </Link>
+              <span>
+                About Us
+              </span>
 
-            <Link
+              <ArrowRight
+                size={16}
+                className="text-gray-400"
+              />
+            </NavLink>
+
+            <NavLink
               to="/contact"
               onClick={
                 closeMenus
               }
-              className="py-3"
+              className="
+                flex items-center
+                justify-between
+                py-4
+                text-[15px]
+                text-gray-700
+              "
             >
-              Contact Us
-            </Link>
+              <span>
+                Contact Us
+              </span>
+
+              <ArrowRight
+                size={16}
+                className="text-gray-400"
+              />
+            </NavLink>
           </nav>
         </div>
       )}

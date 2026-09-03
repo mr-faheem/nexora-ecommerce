@@ -1,4 +1,7 @@
-import api from "../api/axios";
+import api, {
+  cachedGet,
+  clearApiCache,
+} from "../api/axios";
 
 // ======================================================
 // PUBLIC PRODUCTS
@@ -10,7 +13,7 @@ export const getProducts =
     params = {}
   ) => {
     const response =
-      await api.get(
+      await cachedGet(
         "/products",
         {
           params,
@@ -47,7 +50,7 @@ export const getAdminProducts =
 export const getProductById =
   async (id) => {
     const response =
-      await api.get(
+      await cachedGet(
         `/products/${id}`
       );
 
@@ -68,6 +71,8 @@ export const createProduct =
         productData
       );
 
+    clearApiCache();
+
     return response.data;
   };
 
@@ -86,6 +91,8 @@ export const updateProduct =
         productData
       );
 
+    clearApiCache();
+
     return response.data;
   };
 
@@ -99,6 +106,8 @@ export const deleteProduct =
       await api.delete(
         `/products/${id}`
       );
+
+    clearApiCache();
 
     return response.data;
   };
@@ -122,6 +131,8 @@ export const deleteProductImage =
           },
         }
       );
+
+    clearApiCache();
 
     return response.data;
   };

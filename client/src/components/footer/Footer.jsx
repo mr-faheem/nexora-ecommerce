@@ -15,34 +15,101 @@ function Footer() {
 
   return (
     <footer className="bg-black !text-white">
+
       {/* ================================================= */}
       {/* NEWSLETTER */}
       {/* ================================================= */}
 
       <div className="border-b border-white/15">
-        <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-          <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-gray-400">
+        <div
+          className="
+            max-w-7xl
+            mx-auto
+            px-4
+            sm:px-6
+            py-9
+            sm:py-10
+            md:py-12
+            flex
+            flex-col
+            lg:flex-row
+            lg:items-center
+            lg:justify-between
+            gap-6
+            lg:gap-10
+          "
+        >
+          <div className="max-w-lg">
+            <p
+              className="
+                text-[10px]
+                sm:text-xs
+                uppercase
+                tracking-[0.28em]
+                sm:tracking-[0.3em]
+                text-gray-400
+              "
+            >
               Stay Connected
             </p>
 
-            <h2 className="text-2xl md:text-3xl font-bold mt-3">
-              Style updates,
-              new arrivals and
-              more.
+            <h2
+              className="
+                text-[26px]
+                sm:text-2xl
+                md:text-3xl
+                font-bold
+                mt-3
+                leading-[1.15]
+              "
+            >
+              Style updates, new arrivals and more.
             </h2>
           </div>
 
-          <div className="flex w-full lg:max-w-md">
+          <div
+            className="
+              flex
+              w-full
+              lg:max-w-md
+              h-[52px]
+              sm:h-[54px]
+            "
+          >
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 min-w-0 bg-transparent border border-white/30 px-4 py-3.5 outline-none focus:border-white !text-white placeholder:text-gray-500"
+              className="
+                flex-1
+                min-w-0
+                bg-transparent
+                border
+                border-white/30
+                px-4
+                sm:px-5
+                outline-none
+                focus:border-white
+                !text-white
+                placeholder:text-gray-500
+                text-sm
+                sm:text-base
+              "
             />
 
             <button
               type="button"
-              className="bg-white !text-black px-5 flex items-center justify-center hover:bg-gray-200 transition"
+              className="
+                w-[54px]
+                sm:w-[60px]
+                bg-white
+                !text-black
+                flex
+                items-center
+                justify-center
+                hover:bg-gray-200
+                transition
+                shrink-0
+              "
               aria-label="Subscribe"
             >
               <ArrowRight
@@ -57,31 +124,66 @@ function Footer() {
       {/* MAIN FOOTER */}
       {/* ================================================= */}
 
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div
+        className="
+          max-w-7xl
+          mx-auto
+          px-4
+          sm:px-6
+          py-12
+          sm:py-14
+          md:py-16
+        "
+      >
+        <div
+          className="
+            grid
+            grid-cols-2
+            lg:grid-cols-4
+            gap-x-7
+            gap-y-10
+            sm:gap-x-10
+            lg:gap-10
+          "
+        >
 
           {/* ============================================= */}
           {/* BRAND */}
           {/* ============================================= */}
 
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <Link
               to="/"
-              className="text-2xl font-bold tracking-[0.1em] !text-white"
+              className="
+                text-[24px]
+                sm:text-2xl
+                font-bold
+                tracking-[0.1em]
+                !text-white
+              "
             >
               NEXORA
             </Link>
 
-            <p className="text-gray-400 text-sm leading-7 mt-5 max-w-xs">
-              Modern fashion made
-              for everyday confidence,
-              comfort and effortless
-              style.
+            <p
+              className="
+                text-gray-400
+                text-sm
+                leading-6
+                sm:leading-7
+                mt-4
+                sm:mt-5
+                max-w-sm
+                lg:max-w-xs
+              "
+            >
+              Modern fashion made for everyday confidence,
+              comfort and effortless style.
             </p>
 
             {/* Social Icons */}
 
-            <div className="flex items-center gap-4 mt-6">
+            <div className="flex items-center gap-3 mt-5 sm:mt-6">
 
               {/* Instagram */}
 
@@ -89,7 +191,20 @@ function Footer() {
                 href="#"
                 aria-label="Instagram"
                 title="Instagram"
-                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center !text-white hover:bg-white hover:!text-black transition"
+                className="
+                  w-10
+                  h-10
+                  rounded-full
+                  border
+                  border-white/20
+                  flex
+                  items-center
+                  justify-center
+                  !text-white
+                  hover:bg-white
+                  hover:!text-black
+                  transition
+                "
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -132,7 +247,20 @@ function Footer() {
                 href="#"
                 aria-label="Facebook"
                 title="Facebook"
-                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center !text-white hover:bg-white hover:!text-black transition"
+                className="
+                  w-10
+                  h-10
+                  rounded-full
+                  border
+                  border-white/20
+                  flex
+                  items-center
+                  justify-center
+                  !text-white
+                  hover:bg-white
+                  hover:!text-black
+                  transition
+                "
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -152,11 +280,29 @@ function Footer() {
           {/* ============================================= */}
 
           <div>
-            <h3 className="font-semibold text-lg !text-white">
+            <h3
+              className="
+                font-semibold
+                text-base
+                sm:text-lg
+                !text-white
+              "
+            >
               Shop
             </h3>
 
-            <div className="mt-5 flex flex-col gap-3 text-sm text-gray-400">
+            <div
+              className="
+                mt-4
+                sm:mt-5
+                flex
+                flex-col
+                gap-2.5
+                sm:gap-3
+                text-sm
+                text-gray-400
+              "
+            >
               <Link
                 to="/shop"
                 className="hover:!text-white transition"
@@ -199,11 +345,29 @@ function Footer() {
           {/* ============================================= */}
 
           <div>
-            <h3 className="font-semibold text-lg !text-white">
+            <h3
+              className="
+                font-semibold
+                text-base
+                sm:text-lg
+                !text-white
+              "
+            >
               Customer Care
             </h3>
 
-            <div className="mt-5 flex flex-col gap-3 text-sm text-gray-400">
+            <div
+              className="
+                mt-4
+                sm:mt-5
+                flex
+                flex-col
+                gap-2.5
+                sm:gap-3
+                text-sm
+                text-gray-400
+              "
+            >
               <Link
                 to="/profile"
                 className="hover:!text-white transition"
@@ -245,20 +409,39 @@ function Footer() {
           {/* CONTACT */}
           {/* ============================================= */}
 
-          <div>
-            <h3 className="font-semibold text-lg !text-white">
+          <div className="col-span-2 lg:col-span-1">
+            <h3
+              className="
+                font-semibold
+                text-base
+                sm:text-lg
+                !text-white
+              "
+            >
               Contact
             </h3>
 
-            <div className="mt-5 space-y-4 text-sm text-gray-400">
+            <div
+              className="
+                mt-4
+                sm:mt-5
+                grid
+                sm:grid-cols-2
+                lg:grid-cols-1
+                gap-x-6
+                gap-y-3.5
+                text-sm
+                text-gray-400
+              "
+            >
 
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 min-w-0">
                 <Mail
                   size={18}
                   className="mt-0.5 shrink-0"
                 />
 
-                <span>
+                <span className="break-all sm:break-normal">
                   support@nexora.com
                 </span>
               </div>
@@ -287,7 +470,14 @@ function Footer() {
 
               <Link
                 to="/about"
-                className="inline-flex items-center gap-2 hover:!text-white transition"
+                className="
+                  inline-flex
+                  items-center
+                  gap-2
+                  hover:!text-white
+                  transition
+                  w-fit
+                "
               >
                 About Nexora
 
@@ -303,13 +493,40 @@ function Footer() {
         {/* BOTTOM FOOTER */}
         {/* ================================================= */}
 
-        <div className="border-t border-white/15 mt-14 pt-7 flex flex-col md:flex-row md:items-center justify-between gap-4 text-sm text-gray-500">
+        <div
+          className="
+            border-t
+            border-white/15
+            mt-10
+            sm:mt-12
+            md:mt-14
+            pt-6
+            sm:pt-7
+            flex
+            flex-col
+            md:flex-row
+            md:items-center
+            md:justify-between
+            gap-4
+            text-xs
+            sm:text-sm
+            text-gray-500
+          "
+        >
           <p>
-            © {year} Nexora.
-            All rights reserved.
+            © {year} Nexora. All rights reserved.
           </p>
 
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
+          <div
+            className="
+              grid
+              grid-cols-2
+              sm:flex
+              sm:flex-wrap
+              gap-x-5
+              gap-y-2
+            "
+          >
             <span>
               Secure Payments
             </span>
