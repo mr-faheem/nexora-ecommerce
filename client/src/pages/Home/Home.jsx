@@ -17,7 +17,9 @@ import {
   CreditCard,
 } from "lucide-react";
 
-import api from "../../api/axios";
+import {
+  cachedGet,
+} from "../../api/axios";
 import ProductCard from "../../components/cards/ProductCard";
 
 import bannerMen from "../../assets/banners/banner-men.png";
@@ -193,74 +195,130 @@ function Home() {
   // FETCH NEW PRODUCTS
   // ======================================================
 
-  useEffect(() => {
-    const fetchProducts =
-      async () => {
-        try {
-          const response =
-            await api.get(
-              "/products?sort=newest&limit=4"
-            );
+ useEffect(() => {
+  let mounted = true;
 
+  const fetchProducts =
+    async () => {
+      try {
+        setLoadingProducts(
+          true
+        );
+
+        const response =
+          await cachedGet(
+            "/products",
+            {
+              params: {
+                sort: "newest",
+                limit: 4,
+              },
+            }
+          );
+
+        if (!mounted) {
+          return;
+        }
+
+        setProducts(
+          response.data
+            ?.products || []
+        );
+      } catch (error) {
+        console.error(
+          "Home Products Error:",
+          error
+        );
+
+        // Important:
+        // temporary timeout par fake
+        // "No products available"
+        // state mat banao.
+        if (mounted) {
           setProducts(
-            response.data
-              .products || []
+            (current) =>
+              current
           );
-        } catch (error) {
-          console.error(
-            "Home Products Error:",
-            error
-          );
-
-          setProducts([]);
-        } finally {
+        }
+      } finally {
+        if (mounted) {
           setLoadingProducts(
             false
           );
         }
-      };
+      }
+    };
 
-    fetchProducts();
-  }, []);
+  fetchProducts();
 
+  return () => {
+    mounted = false;
+  };
+}, []);
   // ======================================================
   // FETCH ACTIVE CATEGORIES
   // ======================================================
 
   useEffect(() => {
-    const fetchCategories =
-      async () => {
-        try {
-          const response =
-            await api.get(
-              "/categories?active=true"
-            );
+  let mounted = true;
 
-          const activeCategories =
-            response.data
-              .categories || [];
+  const fetchCategories =
+    async () => {
+      try {
+        setLoadingCategories(
+          true
+        );
 
+        const response =
+          await cachedGet(
+            "/categories",
+            {
+              params: {
+                active: true,
+              },
+            }
+          );
+
+        if (!mounted) {
+          return;
+        }
+
+        const activeCategories =
+          response.data
+            ?.categories || [];
+
+        setCategories(
+          sortCategories(
+            activeCategories
+          )
+        );
+      } catch (error) {
+        console.error(
+          "Home Categories Error:",
+          error
+        );
+
+        if (mounted) {
           setCategories(
-            sortCategories(
-              activeCategories
-            )
+            (current) =>
+              current
           );
-        } catch (error) {
-          console.error(
-            "Home Categories Error:",
-            error
-          );
-
-          setCategories([]);
-        } finally {
+        }
+      } finally {
+        if (mounted) {
           setLoadingCategories(
             false
           );
         }
-      };
+      }
+    };
 
-    fetchCategories();
-  }, []);
+  fetchCategories();
+
+  return () => {
+    mounted = false;
+  };
+}, []);
 
   const homeCategories =
     categories.slice(0, 3);

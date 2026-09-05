@@ -5,7 +5,8 @@ const api = axios.create({
     import.meta.env.VITE_API_BASE_URL ||
     "http://localhost:5000/api",
 
-  timeout: 20000,
+  // Render cold start ke liye 20 sec kam pad sakta hai
+  timeout: 60000,
 });
 
 // ======================================================
@@ -14,7 +15,8 @@ const api = axios.create({
 
 const requestCache = new Map();
 
-const CACHE_TIME = 60 * 1000; // 1 minute
+const CACHE_TIME =
+  60 * 1000; // 1 minute
 
 function getCacheKey(config) {
   const params =
@@ -39,11 +41,11 @@ api.interceptors.request.use(
         `Bearer ${token}`;
     }
 
-    // FormData ho to browser ko
-    // Content-Type khud set karne do
     if (
-      typeof FormData !== "undefined" &&
-      config.data instanceof FormData
+      typeof FormData !==
+        "undefined" &&
+      config.data instanceof
+        FormData
     ) {
       delete config.headers[
         "Content-Type"
@@ -58,56 +60,120 @@ api.interceptors.request.use(
 );
 
 // ======================================================
-// CACHED GET
-// Public listing APIs ke liye
+// RETRY GET REQUEST
+// Render cold start / temporary network errors
 // ======================================================
 
-export const cachedGet = async (
-  url,
-  config = {},
-  cacheTime = CACHE_TIME
-) => {
-  const cacheKey =
-    getCacheKey({
-      url,
-      ...config,
-    });
-
-  const cached =
-    requestCache.get(cacheKey);
-
-  if (
-    cached &&
-    Date.now() - cached.time <
-      cacheTime
-  ) {
-    return cached.response;
-  }
-
-  const response =
-    await api.get(
-      url,
-      config
-    );
-
-  requestCache.set(
-    cacheKey,
-    {
-      response,
-      time: Date.now(),
-    }
+const sleep = (ms) =>
+  new Promise((resolve) =>
+    setTimeout(resolve, ms)
   );
 
-  return response;
-};
+export const getWithRetry =
+  async (
+    url,
+    config = {},
+    retries = 2
+  ) => {
+    let lastError;
+
+    for (
+      let attempt = 0;
+      attempt <= retries;
+      attempt++
+    ) {
+      try {
+        return await api.get(
+          url,
+          config
+        );
+      } catch (error) {
+        lastError = error;
+
+        const status =
+          error.response?.status;
+
+        const retryable =
+          error.code ===
+            "ECONNABORTED" ||
+          !error.response ||
+          (status >= 500 &&
+            status < 600);
+
+        if (
+          !retryable ||
+          attempt === retries
+        ) {
+          throw error;
+        }
+
+        // 1.5s -> 3s
+        await sleep(
+          1500 *
+            (attempt + 1)
+        );
+      }
+    }
+
+    throw lastError;
+  };
+
+// ======================================================
+// CACHED GET
+// ======================================================
+
+export const cachedGet =
+  async (
+    url,
+    config = {},
+    cacheTime = CACHE_TIME
+  ) => {
+    const cacheKey =
+      getCacheKey({
+        url,
+        ...config,
+      });
+
+    const cached =
+      requestCache.get(
+        cacheKey
+      );
+
+    if (
+      cached &&
+      Date.now() -
+        cached.time <
+        cacheTime
+    ) {
+      return cached.response;
+    }
+
+    // Direct api.get ki jagah
+    // retry enabled GET
+    const response =
+      await getWithRetry(
+        url,
+        config
+      );
+
+    requestCache.set(
+      cacheKey,
+      {
+        response,
+        time: Date.now(),
+      }
+    );
+
+    return response;
+  };
 
 // ======================================================
 // CLEAR CACHE
-// Product/category create/update/delete ke baad use kar sakte ho
 // ======================================================
 
-export const clearApiCache = () => {
-  requestCache.clear();
-};
+export const clearApiCache =
+  () => {
+    requestCache.clear();
+  };
 
 export default api;
